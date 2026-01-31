@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>魔法喫茶店</title>
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Varela+Round&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Noto Sans SC', 'Quicksand', sans-serif;
+        /* Pink Plank Background (Strawberry Milk Wood) */
+        background-color: #FFF0F5;
+        /* Wood Plank Pattern: Vertical stripes with subtle pinkish groove effect */
+        background-image: repeating-linear-gradient(
+          90deg,
+          transparent 0,
+          transparent 78px,
+          rgba(236, 72, 153, 0.08) 79px,
+          rgba(236, 72, 153, 0.04) 80px
+        );
+        background-attachment: fixed;
+        color: #704848; /* Warm Brownish-Pink Text */
+      }
+      .font-varela {
+        font-family: 'Varela Round', 'Noto Sans SC', sans-serif;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #F9A8D4; /* Pink-300 */
+        border-radius: 10px;
+        border: 2px solid #FFF0F5;
+      }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "path": "https://esm.sh/path@^0.12.7",
+    "url": "https://esm.sh/url@^0.11.4",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "framer-motion": "https://esm.sh/framer-motion@^12.29.2",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "@dnd-kit/utilities": "https://esm.sh/@dnd-kit/utilities@^3.2.2",
+    "@dnd-kit/sortable": "https://esm.sh/@dnd-kit/sortable@^10.0.0",
+    "canvas-confetti": "https://esm.sh/canvas-confetti@^1.9.4",
+    "@dnd-kit/core": "https://esm.sh/@dnd-kit/core@^6.3.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

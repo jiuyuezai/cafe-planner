@@ -15,7 +15,7 @@ import {
 } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates, arrayMove } from '@dnd-kit/sortable';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, BookOpen, BarChart2, Zap, Loader2 } from 'lucide-react';
+import { Plus, BookOpen, BarChart2, Zap, Loader2, HardDrive } from 'lucide-react';
 
 import { Task, TimeBlock, Category, ColorTheme, Note, TaskStatus } from './types';
 import Column from './components/Column';
@@ -26,6 +26,7 @@ import TaskModal from './components/TaskModal';
 import EditTaskModal from './components/EditTaskModal';
 import HistoryModal from './components/HistoryModal';
 import QuickNotesModal from './components/QuickNotesModal';
+import DataManagerModal from './components/DataManagerModal';
 import { useSound } from './hooks/useSound';
 import { DB } from './utils/db'; // Import IndexedDB wrapper
 
@@ -73,6 +74,7 @@ const App: React.FC = () => {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isStatsOpen, setIsStatsOpen] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
+  const [isDataManagerOpen, setIsDataManagerOpen] = useState(false);
 
   // --- INDEXEDDB INITIALIZATION ---
   useEffect(() => {
@@ -231,6 +233,42 @@ const App: React.FC = () => {
     }
   };
 
+  const handleImportData = async (newCategories: Category[], newTasks: Task[], newNotes: Note[]) => {
+    try {
+      // First, clear all existing data
+      for (const task of tasks) {
+        await DB.tasks.delete(task.id);
+      }
+      for (const category of categories) {
+        await DB.categories.delete(category.id);
+      }
+      for (const note of quickNotes) {
+        await DB.notes.delete(note.id);
+      }
+
+      // Then, import new data
+      if (newCategories.length > 0) {
+        await DB.categories.seed(newCategories);
+      }
+      if (newTasks.length > 0) {
+        await DB.tasks.seed(newTasks);
+      }
+      if (newNotes.length > 0) {
+        await Promise.all(newNotes.map(note => DB.notes.put(note)));
+      }
+
+      // Update state
+      setCategories(newCategories);
+      setTasks(newTasks);
+      setQuickNotes(newNotes.sort((a, b) => b.createdAt - a.createdAt));
+
+      play('open');
+    } catch (error) {
+      console.error('Import failed:', error);
+      alert('导入失败，请重试。');
+    }
+  };
+
   const openEditTask = (task: Task) => {
     setEditingTask(task);
     play('open');
@@ -385,6 +423,20 @@ const App: React.FC = () => {
         >
           <BookOpen size={20} />
         </motion.button>
+
+        {/* Data Manager Button */}
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => {
+            play('open');
+            setIsDataManagerOpen(true);
+          }}
+          className="w-11 h-11 bg-white rounded-xl shadow-md border-2 border-white flex items-center justify-center text-slate-500 hover:text-slate-600 hover:border-slate-100 transition-colors"
+          title="数据管理"
+        >
+          <HardDrive size={20} />
+        </motion.button>
       </div>
 
       {/* Header */}
@@ -515,6 +567,17 @@ const App: React.FC = () => {
             notes={quickNotes}
             onAddNote={handleAddNote}
             onDeleteNote={handleDeleteNote}
+          />
+        )}
+        {isDataManagerOpen && (
+          <DataManagerModal
+            isOpen={isDataManagerOpen}
+            onClose={() => setIsDataManagerOpen(false)}
+            categories={categories}
+            tasks={tasks}
+            notes={quickNotes}
+            onImportData={handleImportData}
+            onPlay={play}
           />
         )}
       </AnimatePresence>

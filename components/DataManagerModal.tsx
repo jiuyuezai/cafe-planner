@@ -166,12 +166,12 @@ const DataManagerModal: React.FC<DataManagerModalProps> = ({
               )}
             </AnimatePresence>
 
-            {/* Info Box */}
+            {/* Info Box
             <div className="mb-6 p-4 bg-amber-50 rounded-lg border border-amber-200">
               <p className="text-sm text-amber-800">
                 💡 <strong>提示：</strong>导出您的数据以备份，或导入以前的备份来恢复数据。
               </p>
-            </div>
+            </div> */}
 
             {/* Export Section */}
             <div className="mb-6">
@@ -183,7 +183,7 @@ const DataManagerModal: React.FC<DataManagerModalProps> = ({
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handleExportJSON}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg font-medium transition-colors border border-blue-200"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-yellow-50 hover:bg-yellow-100 text-yellow-700 rounded-lg font-medium transition-colors border border-yellow-200"
                 >
                   <Download size={18} />
                   导出为 JSON 备份
@@ -222,7 +222,7 @@ const DataManagerModal: React.FC<DataManagerModalProps> = ({
                 whileTap={{ scale: 0.98 }}
                 onClick={handleImportClick}
                 disabled={isImporting}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-purple-50 hover:bg-purple-100 disabled:opacity-50 disabled:cursor-not-allowed text-purple-700 rounded-lg font-medium transition-colors border border-purple-200"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-50 hover:bg-blue-100 disabled:opacity-50 disabled:cursor-not-allowed text-blue-700 rounded-lg font-medium transition-colors border border-blue-200"
               >
                 <Upload size={18} />
                 {isImporting ? '导入中...' : '选择 JSON 文件导入'}
@@ -236,9 +236,9 @@ const DataManagerModal: React.FC<DataManagerModalProps> = ({
                 className="hidden"
               />
 
-              <p className="mt-2 text-xs text-stone-500">
+              {/* <p className="mt-2 text-xs text-stone-500">
                 ⚠️ 选择之前导出的 JSON 文件来恢复您的数据。
-              </p>
+              </p> */}
             </div>
 
             {/* Footer */}

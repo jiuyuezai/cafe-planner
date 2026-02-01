@@ -59,7 +59,7 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({
         initial={{ scale: 0.9, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.9, y: 20, opacity: 0 }}
-        className="relative bg-white w-full max-w-[340px] rounded-[2rem] shadow-2xl overflow-hidden border-[3px] border-amber-100 flex flex-col"
+        className="relative bg-white w-full max-w-[540px] rounded-[2rem] shadow-2xl overflow-hidden border-[3px] border-amber-100 flex flex-col"
       >
         <div className="flex items-center justify-between px-5 pt-5 pb-2">
             <h3 className="text-lg font-varela font-bold text-stone-700">编辑订单</h3>
@@ -74,7 +74,9 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({
         <form onSubmit={handleSave} className="p-5 flex flex-col gap-4">
             {/* Title Input */}
             <div className="bg-stone-50 rounded-2xl p-4 border-2 border-transparent focus-within:border-amber-200 transition-colors">
-                <input 
+                <textarea 
+                    placeholder=""
+                    rows={2}
                     autoFocus
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}

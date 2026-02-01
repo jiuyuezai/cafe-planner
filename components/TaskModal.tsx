@@ -101,7 +101,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.8, y: 20, opacity: 0 }}
         transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
-        className="relative bg-white w-full max-w-[340px] rounded-[2rem] shadow-2xl overflow-hidden border-[3px] border-amber-100 flex flex-col max-h-[90vh]"
+        className="relative bg-white w-full max-w-[540px] rounded-[2rem] shadow-2xl overflow-hidden border-[3px] border-amber-100 flex flex-col max-h-[90vh]"
       >
         {/* Compact Header */}
         <div className="flex items-center justify-between px-5 pt-5 pb-2">
@@ -142,7 +142,8 @@ const TaskModal: React.FC<TaskModalProps> = ({
               >
                 {/* Input Bubble */}
                 <div className="bg-stone-50 rounded-2xl p-4 border-2 border-transparent focus-within:border-amber-200 transition-colors group">
-                   <input 
+                   <textarea 
+                     rows={2}
                      autoFocus
                      value={taskTitle}
                      onChange={(e) => setTaskTitle(e.target.value)}

@@ -60,15 +60,15 @@ const QuickNotesModal: React.FC<QuickNotesModalProps> = ({
         initial={{ scale: 0.9, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.9, y: 20, opacity: 0 }}
-        className="relative bg-[#FFFEF0] w-full max-w-4xl max-h-[85vh] rounded-[2.5rem] shadow-2xl overflow-hidden border-8 border-white flex flex-col"
+        className="relative bg-[#FFFEF0] w-full mx-4 max-w-4xl max-h-[90vh] sm:max-h-[85vh] rounded-[2.5rem] shadow-2xl overflow-hidden border-8 border-white flex flex-col"
       >
         {/* Header */}
-        <div className="px-8 pt-6 pb-4 bg-[#FFFEF0] z-10 flex justify-between items-center border-b border-amber-100/50">
-            <div>
-                <h2 className="text-2xl font-varela font-bold text-stone-700 flex items-center gap-2">
+        <div className="px-4 sm:px-8 pt-4 sm:pt-6 pb-4 bg-[#FFFEF0] z-10 flex justify-between items-center border-b border-amber-100/50 gap-2">
+            <div className="min-w-0">
+                <h2 className="text-lg sm:text-2xl font-varela font-bold text-stone-700 flex items-center gap-1 sm:gap-2">
                     ⚡ 灵感闪念 
                 </h2>
-                <p className="text-amber-500/60 text-xs font-bold mt-1 tracking-wider uppercase">
+                <p className="text-amber-500/60 text-[10px] sm:text-xs font-bold mt-1 tracking-wider uppercase">
                    速速记下，别让好点子溜走！
                 </p>
             </div>
@@ -81,25 +81,25 @@ const QuickNotesModal: React.FC<QuickNotesModalProps> = ({
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-y-auto p-6 custom-scrollbar bg-[radial-gradient(#E5E7EB_1px,transparent_1px)] [background-size:20px_20px]">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar bg-[radial-gradient(#E5E7EB_1px,transparent_1px)] [background-size:20px_20px]">
             
             {/* Input Area */}
-            <div className="max-w-xl mx-auto mb-10">
+            <div className="max-w-2xl mx-auto mb-8 sm:mb-10 px-2 sm:px-0">
                 <div className="relative group">
                     <div className="absolute -inset-1 bg-gradient-to-r from-yellow-300 to-amber-300 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-200"></div>
-                    <div className="relative bg-white rounded-2xl shadow-sm border border-amber-100 p-2 flex gap-2 items-start">
+                    <div className="relative bg-white rounded-2xl shadow-sm border border-amber-100 p-2 sm:p-3 flex flex-col sm:flex-row gap-2 items-start min-h-[100px] sm:min-h-[80px]">
                         <textarea
                             ref={inputRef}
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyDown={handleKeyDown}
                             placeholder="有什么新点子？写下来..."
-                            className="w-full bg-transparent p-3 outline-none text-stone-600 font-bold placeholder:text-stone-300 resize-none h-[60px] custom-scrollbar"
+                            className="w-full bg-transparent p-2 sm:p-3 outline-none text-stone-600 font-bold placeholder:text-stone-300 resize-none h-[60px] sm:h-[80px] custom-scrollbar text-sm sm:text-base"
                         />
                         <button
                             onClick={() => handleSubmit()}
                             disabled={!inputValue.trim()}
-                            className="shrink-0 w-14 h-14 bg-amber-400 text-white rounded-xl flex items-center justify-center hover:bg-amber-500 disabled:opacity-50 disabled:hover:bg-amber-400 transition-colors shadow-sm active:scale-95"
+                            className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 bg-amber-400 text-white rounded-xl flex items-center justify-center hover:bg-amber-500 disabled:opacity-50 disabled:hover:bg-amber-400 transition-colors shadow-sm active:scale-95 self-end sm:self-start"
                         >
                             <Zap size={24} fill="currentColor" />
                         </button>
@@ -114,7 +114,7 @@ const QuickNotesModal: React.FC<QuickNotesModalProps> = ({
                     <span className="font-bold">暂无灵感</span>
                 </div>
             ) : (
-                <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-3 sm:gap-4 space-y-3 sm:space-y-4">
                     <AnimatePresence>
                         {notes.map((note) => (
                             <motion.div

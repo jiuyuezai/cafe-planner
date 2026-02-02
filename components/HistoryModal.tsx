@@ -77,16 +77,16 @@ const HistoryModal: React.FC<HistoryModalProps> = ({ isOpen, onClose, tasks, cat
         initial={{ scale: 0.9, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.9, y: 20, opacity: 0 }}
-        className="relative bg-[#FFFBF7] w-full max-w-3xl max-h-[85vh] rounded-[2.5rem] shadow-2xl overflow-hidden border-8 border-white flex flex-col"
+        className="relative bg-[#FFFBF7] w-full mx-4 max-w-3xl max-h-[90vh] sm:max-h-[85vh] rounded-[2.5rem] shadow-2xl overflow-hidden border-8 border-white flex flex-col"
       >
         {/* Header */}
-        <div className="px-8 pt-8 pb-4 bg-white/50 backdrop-blur-md sticky top-0 z-10 border-b border-white/50">
-            <div className="flex justify-between items-start mb-4">
-                <div>
-                    <h2 className="text-2xl font-varela font-bold text-stone-700 flex items-center gap-2">
+        <div className="px-4 sm:px-8 pt-4 sm:pt-8 pb-4 bg-white/50 backdrop-blur-md sticky top-0 z-10 border-b border-white/50">
+            <div className="flex justify-between items-start mb-4 gap-2">
+                <div className="min-w-0">
+                    <h2 className="text-lg sm:text-2xl font-varela font-bold text-stone-700 flex items-center gap-2">
                         📜 历史菜单存档
                     </h2>
-                    <p className="text-stone-400 text-sm font-bold mt-1">
+                    <p className="text-stone-400 text-xs sm:text-sm font-bold mt-1">
                         累计出餐数: {tasks.filter(t => t.status === 'completed').length} 份
                     </p>
                 </div>
@@ -99,11 +99,11 @@ const HistoryModal: React.FC<HistoryModalProps> = ({ isOpen, onClose, tasks, cat
             </div>
 
             {/* Category Filter Bar */}
-            <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar no-scrollbar select-none">
+            <div className="flex gap-1 sm:gap-2 overflow-x-auto pb-2 custom-scrollbar no-scrollbar select-none">
                 <button
                     onClick={() => setFilterCatId('all')}
                     className={`
-                        px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap border-2 transition-all
+                        px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap border-2 transition-all
                         ${filterCatId === 'all' 
                             ? 'bg-stone-700 border-stone-700 text-white shadow-md' 
                             : 'bg-white border-stone-200 text-stone-400 hover:border-stone-300'}
@@ -116,7 +116,7 @@ const HistoryModal: React.FC<HistoryModalProps> = ({ isOpen, onClose, tasks, cat
                         key={cat.id}
                         onClick={() => setFilterCatId(cat.id === filterCatId ? 'all' : cat.id)}
                         className={`
-                            px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap border-2 transition-all flex items-center gap-2
+                            px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap border-2 transition-all flex items-center gap-1 sm:gap-2
                             ${filterCatId === cat.id 
                                 ? 'bg-white border-current shadow-md scale-105' 
                                 : 'bg-white border-transparent hover:bg-stone-50 opacity-60 hover:opacity-100'}
@@ -136,7 +136,7 @@ const HistoryModal: React.FC<HistoryModalProps> = ({ isOpen, onClose, tasks, cat
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto p-6 custom-scrollbar bg-gradient-to-b from-[#FFFBF7] to-white">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar bg-gradient-to-b from-[#FFFBF7] to-white">
             {Object.keys(groupedTasks).length === 0 ? (
                 <div className="h-64 flex flex-col items-center justify-center text-stone-300">
                     <span className="text-6xl mb-4 grayscale opacity-50">🍽️</span>
@@ -156,7 +156,7 @@ const HistoryModal: React.FC<HistoryModalProps> = ({ isOpen, onClose, tasks, cat
                             </div>
 
                             {/* Grid */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
                                 {(groupTasks as Task[]).map((task, index) => {
                                     const category = getCategory(task.categoryId);
                                     const themeClass = category ? THEME_STYLES[category.theme] : THEME_STYLES.slate;

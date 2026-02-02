@@ -101,7 +101,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.8, y: 20, opacity: 0 }}
         transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
-        className="relative bg-white w-full max-w-[540px] rounded-[2rem] shadow-2xl overflow-hidden border-[3px] border-amber-100 flex flex-col max-h-[90vh]"
+        className="relative bg-white w-full mx-4 max-w-[540px] rounded-[2rem] shadow-2xl overflow-hidden border-[3px] border-amber-100 flex flex-col max-h-[90vh] max-h-[85dvh] sm:max-h-[95dvh]"
       >
         {/* Compact Header */}
         <div className="flex items-center justify-between px-5 pt-5 pb-2">
@@ -178,7 +178,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
                 {/* Category Grid */}
                 <div>
                    <p className="text-[10px] font-bold text-stone-400 mb-2 pl-2 uppercase tracking-wider opacity-60">选择制作台</p>
-                   <div className="grid grid-cols-2 gap-2 max-h-[160px] overflow-y-auto pr-1 custom-scrollbar">
+                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[160px] overflow-y-auto pr-1 custom-scrollbar">
                       {categories.map(cat => (
                          <button
                            key={cat.id}
@@ -220,7 +220,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
                  {/* Compact Tags List */}
                  <div className="space-y-2 max-h-[140px] overflow-y-auto pr-1 custom-scrollbar">
                     {categories.map(cat => (
-                        <div key={cat.id} className={`flex items-center justify-between p-2 rounded-xl border transition-colors ${editingCatId === cat.id ? 'bg-amber-50 border-amber-200' : 'bg-stone-50 border-stone-100'}`}>
+                        <div key={cat.id} className={`flex items-center justify-between p-2 rounded-xl border transition-colors min-h-[44px] ${editingCatId === cat.id ? 'bg-amber-50 border-amber-200' : 'bg-stone-50 border-stone-100'}`}>
                             <div className="flex items-center gap-2.5">
                                 <div className="w-8 h-8 rounded-lg flex items-center justify-center shadow-sm text-lg bg-white border border-stone-100">
                                     {cat.icon || '✨'}
@@ -257,11 +257,12 @@ const TaskModal: React.FC<TaskModalProps> = ({
                         </div>
                     )}
                     {/* Input Row */}
-                    <div className="flex items-center gap-2 mb-3">
+                    <div className="flex items-center gap-2 mb-3 min-h-[44px]">
                         <div className="w-8 h-8 flex items-center justify-center bg-stone-100 rounded-lg text-lg border border-stone-200">
                             {newCatIcon}
                         </div>
-                        <input 
+                        <textarea 
+                          rows={1}
                           value={newCatLabel}
                           onChange={(e) => setNewCatLabel(e.target.value)}
                           placeholder={editingCatId ? "点击修改名称..." : "点击输入新分区名称..."}
@@ -270,7 +271,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
                         <button 
                           type="submit"
                           disabled={!newCatLabel}
-                          className={`w-8 h-8 flex items-center justify-center text-white rounded-lg shadow-sm transition-colors disabled:opacity-50 ${editingCatId ? 'bg-green-300 hover:bg-green-400' : 'bg-amber-400 hover:bg-amber-500'}`}
+                          className={`w-8 h-8 flex items-center justify-center text-white rounded-lg shadow-sm transition-colors disabled:opacity-50 shrink-0 ${editingCatId ? 'bg-green-300 hover:bg-green-400' : 'bg-amber-400 hover:bg-amber-500'}`}
                         >
                             {editingCatId ? <Save size={16} /> : <Plus size={16} />}
                         </button>
@@ -278,15 +279,15 @@ const TaskModal: React.FC<TaskModalProps> = ({
 
                     {/* Emoji Picker Grid */}
                     <div className="mb-3">
-                        <p className="text-[9px] font-bold text-stone-300 mb-1.5 uppercase tracking-wide">选择图标</p>
-                        <div className="grid grid-cols-8 gap-1">
+                        <p className="text-[8px] sm:text-[9px] font-bold text-stone-300 mb-1.5 uppercase tracking-wide">选择图标</p>
+                        <div className="grid grid-cols-6 sm:grid-cols-8 gap-1">
                             {EMOJI_PRESETS.map(emoji => (
                                 <button
                                     key={emoji}
                                     type="button"
                                     onClick={() => setNewCatIcon(emoji)}
                                     className={`
-                                        w-6 h-6 flex items-center justify-center rounded-md text-sm transition-all
+                                        w-8 h-8 sm:w-6 sm:h-6 flex items-center justify-center rounded-md text-base sm:text-sm transition-all
                                         ${newCatIcon === emoji ? 'bg-amber-100 scale-110 shadow-sm border border-amber-200' : 'hover:bg-stone-50 hover:scale-110'}
                                     `}
                                 >
@@ -298,14 +299,14 @@ const TaskModal: React.FC<TaskModalProps> = ({
 
                     {/* Color Swatches */}
                     <div>
-                         <p className="text-[9px] font-bold text-stone-300 mb-1.5 uppercase tracking-wide">分区颜色</p>
-                         <div className="flex justify-between gap-1">
+                         <p className="text-[8px] sm:text-[9px] font-bold text-stone-300 mb-1.5 uppercase tracking-wide">分区颜色</p>
+                         <div className="flex justify-between gap-1 flex-wrap">
                             {(Object.keys(THEME_COLORS) as ColorTheme[]).map(theme => (
                                 <button
                                 key={theme}
                                 type="button"
                                 onClick={() => setNewCatTheme(theme)}
-                                className={`w-5 h-5 rounded-full transition-transform border-2 border-white shadow-sm ${newCatTheme === theme ? 'scale-125 ring-1 ring-stone-300' : 'opacity-60 hover:opacity-100'}`}
+                                className={`w-6 h-6 sm:w-5 sm:h-5 rounded-full transition-transform border-2 border-white shadow-sm ${newCatTheme === theme ? 'scale-125 ring-1 ring-stone-300' : 'opacity-60 hover:opacity-100'}`}
                                 style={{ backgroundColor: THEME_COLORS[theme] }}
                                 />
                             ))}

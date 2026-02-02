@@ -378,10 +378,10 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen pb-24 px-4 pt-10 max-w-6xl mx-auto selection:bg-amber-100 relative">
+    <div className="min-h-screen pb-24 px-3 sm:px-4 pt-8 sm:pt-10 max-w-6xl mx-auto selection:bg-amber-100 relative">
 
       {/* Top Right Fixed Actions */}
-      <div className="fixed top-4 right-4 z-40 flex flex-col gap-3">
+      <div className="fixed top-4 right-2 sm:right-4 z-40 flex flex-col gap-2 sm:gap-3">
         {/* Flash Ideas Button (New) */}
         <motion.button
           whileHover={{ scale: 1.1, rotate: 10 }}
@@ -390,10 +390,10 @@ const App: React.FC = () => {
             play('open');
             setIsNotesOpen(true);
           }}
-          className="w-11 h-11 bg-yellow-400 rounded-xl shadow-md border-2 border-white flex items-center justify-center text-white hover:bg-amber-450 hover:border-amber-100 transition-colors"
+          className="w-10 h-10 sm:w-11 sm:h-11 bg-yellow-400 rounded-xl shadow-md border-2 border-white flex items-center justify-center text-white hover:bg-amber-450 hover:border-amber-100 transition-colors"
           title="灵感闪念"
         >
-          <Zap size={20} fill="currentColor" />
+          <Zap size={18} fill="currentColor" />
         </motion.button>
 
         {/* Stats Button */}
@@ -404,10 +404,10 @@ const App: React.FC = () => {
             play('open');
             setIsStatsOpen(true);
           }}
-          className="w-11 h-11 bg-white rounded-xl shadow-md border-2 border-white flex items-center justify-center text-amber-500 hover:text-amber-600 hover:border-amber-100 transition-colors"
+          className="w-10 h-10 sm:w-11 sm:h-11 bg-white rounded-xl shadow-md border-2 border-white flex items-center justify-center text-amber-500 hover:text-amber-600 hover:border-amber-100 transition-colors"
           title="经营数据"
         >
-          <BarChart2 size={20} />
+          <BarChart2 size={18} />
         </motion.button>
 
         {/* History Button (Recipe Book) */}
@@ -418,10 +418,10 @@ const App: React.FC = () => {
             play('open');
             setIsHistoryOpen(true);
           }}
-          className="w-11 h-11 bg-white rounded-xl shadow-md border-2 border-white flex items-center justify-center text-rose-400 hover:text-rose-500 hover:border-rose-100 transition-colors"
+          className="w-10 h-10 sm:w-11 sm:h-11 bg-white rounded-xl shadow-md border-2 border-white flex items-center justify-center text-rose-400 hover:text-rose-500 hover:border-rose-100 transition-colors"
           title="已出餐记录"
         >
-          <BookOpen size={20} />
+          <BookOpen size={18} />
         </motion.button>
 
         {/* Data Manager Button */}
@@ -432,10 +432,10 @@ const App: React.FC = () => {
             play('open');
             setIsDataManagerOpen(true);
           }}
-          className="w-11 h-11 bg-white rounded-xl shadow-md border-2 border-white flex items-center justify-center text-slate-500 hover:text-slate-600 hover:border-slate-100 transition-colors"
+          className="w-10 h-10 sm:w-11 sm:h-11 bg-white rounded-xl shadow-md border-2 border-white flex items-center justify-center text-slate-500 hover:text-slate-600 hover:border-slate-100 transition-colors"
           title="数据管理"
         >
-          <HardDrive size={20} />
+          <HardDrive size={18} />
         </motion.button>
       </div>
 
@@ -515,9 +515,9 @@ const App: React.FC = () => {
           play('open');
           setIsModalOpen(true);
         }}
-        className="fixed bottom-10 left-1/2 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-amber-300 text-white rounded-2xl shadow-xl shadow-yellow-200 flex items-center justify-center hover:brightness-110 transition-all z-40 border-4 border-white"
+        className="fixed bottom-6 sm:bottom-10 left-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-tr from-yellow-300 to-amber-300 text-white rounded-2xl shadow-xl shadow-yellow-200 flex items-center justify-center hover:brightness-110 transition-all z-40 border-4 border-white"
       >
-        <Plus size={32} strokeWidth={3} />
+        <Plus size={28} strokeWidth={3} />
       </motion.button>
 
       {/* Modals */}

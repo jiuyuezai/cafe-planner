@@ -131,15 +131,15 @@ const MoodBoard: React.FC<MoodBoardProps> = ({ isOpen, onClose, tasks, categorie
         initial={{ scale: 0.9, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.9, y: 20, opacity: 0 }}
-        className="relative bg-[#FDFDFD] w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden border-8 border-white flex flex-col max-h-[85vh]"
+        className="relative bg-[#FDFDFD] w-full mx-4 max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden border-8 border-white flex flex-col max-h-[90vh] sm:max-h-[85vh]"
       >
         {/* Header */}
-        <div className="px-8 pt-8 pb-4 flex justify-between items-center bg-white z-10">
-            <div>
-                <h2 className="text-2xl font-varela font-bold text-stone-700 flex items-center gap-2">
+        <div className="px-4 sm:px-8 pt-4 sm:pt-8 pb-4 flex justify-between items-center bg-white z-10 gap-2">
+            <div className="min-w-0">
+                <h2 className="text-lg sm:text-2xl font-varela font-bold text-stone-700 flex items-center gap-1 sm:gap-2">
                     📊 经营报表
                 </h2>
-                <p className="text-stone-400 text-sm font-bold mt-1">
+                <p className="text-stone-400 text-xs sm:text-sm font-bold mt-1">
                     今日已成功出品 {completedTasks} 份订单
                 </p>
             </div>
@@ -152,11 +152,11 @@ const MoodBoard: React.FC<MoodBoardProps> = ({ isOpen, onClose, tasks, categorie
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto custom-scrollbar">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="p-4 sm:p-6 overflow-y-auto custom-scrollbar">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 
                 {/* Chart 1: Weekly */}
-                <div className="bg-stone-50/50 rounded-[2rem] p-5 border border-stone-100 md:col-span-2">
+                <div className="bg-stone-50/50 rounded-[2rem] p-3 sm:p-5 border border-stone-100 md:col-span-2">
                     <div className="flex items-center gap-2 mb-4">
                         <TrendingUp size={18} className="text-amber-400" />
                         <h3 className="text-stone-600 font-bold text-sm">本周完成情况</h3>
@@ -191,7 +191,7 @@ const MoodBoard: React.FC<MoodBoardProps> = ({ isOpen, onClose, tasks, categorie
                 </div>
 
                 {/* Chart 2: Key Metrics */}
-                <div className="bg-rose-50/30 rounded-[2rem] p-5 border border-rose-100 flex flex-col justify-between min-h-[140px]">
+                <div className="bg-rose-50/30 rounded-[2rem] p-3 sm:p-5 border border-rose-100 flex flex-col justify-between min-h-[140px]">
                     <div className="flex items-center gap-2 mb-4">
                         <Award size={18} className="text-rose-400" />
                         <h3 className="text-stone-600 font-bold text-sm">高光时刻</h3>
@@ -209,7 +209,7 @@ const MoodBoard: React.FC<MoodBoardProps> = ({ isOpen, onClose, tasks, categorie
                 </div>
 
                 {/* Chart 3: Categories */}
-                <div className="bg-sky-50/30 rounded-[2rem] p-5 border border-sky-100 min-h-[140px]">
+                <div className="bg-sky-50/30 rounded-[2rem] p-3 sm:p-5 border border-sky-100 min-h-[140px]">
                     <div className="flex items-center gap-2 mb-4">
                         <PieChart size={18} className="text-sky-400" />
                         <h3 className="text-stone-600 font-bold text-sm">热门榜</h3>

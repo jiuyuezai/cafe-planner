@@ -59,10 +59,10 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({
         initial={{ scale: 0.9, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.9, y: 20, opacity: 0 }}
-        className="relative bg-white w-full max-w-[540px] rounded-[2rem] shadow-2xl overflow-hidden border-[3px] border-amber-100 flex flex-col"
+        className="relative bg-white w-full mx-4 max-w-[540px] rounded-[2rem] shadow-2xl overflow-hidden border-[3px] border-amber-100 flex flex-col max-h-[90vh]"
       >
-        <div className="flex items-center justify-between px-5 pt-5 pb-2">
-            <h3 className="text-lg font-varela font-bold text-stone-700">编辑订单</h3>
+        <div className="flex items-center justify-between px-4 sm:px-5 pt-4 sm:pt-5 pb-2">
+            <h3 className="text-base sm:text-lg font-varela font-bold text-stone-700">编辑订单</h3>
             <button 
                 onClick={onClose} 
                 className="w-8 h-8 flex items-center justify-center bg-stone-50 text-stone-300 hover:bg-amber-50 hover:text-amber-400 rounded-full transition-colors"
@@ -71,16 +71,16 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({
             </button>
         </div>
 
-        <form onSubmit={handleSave} className="p-5 flex flex-col gap-4">
+        <form onSubmit={handleSave} className="p-4 sm:p-5 flex flex-col gap-4 overflow-y-auto">
             {/* Title Input */}
-            <div className="bg-stone-50 rounded-2xl p-4 border-2 border-transparent focus-within:border-amber-200 transition-colors">
+            <div className="bg-stone-50 rounded-2xl p-3 sm:p-4 border-2 border-transparent focus-within:border-amber-200 transition-colors">
                 <textarea 
                     placeholder=""
                     rows={2}
                     autoFocus
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full bg-transparent outline-none text-stone-600 font-bold placeholder:text-stone-300 text-lg"
+                    className="w-full bg-transparent outline-none text-stone-600 font-bold placeholder:text-stone-300 text-base sm:text-lg"
                 />
             </div>
 
@@ -89,7 +89,7 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({
                 <p className="text-[10px] font-bold text-stone-400 mb-2 pl-2 uppercase tracking-wider opacity-60">
                     更改制作台
                 </p>
-                <div className="grid grid-cols-2 gap-2 max-h-[160px] overflow-y-auto pr-1 custom-scrollbar">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[160px] overflow-y-auto pr-1 custom-scrollbar">
                     {categories.map(cat => (
                         <button
                         key={cat.id}
@@ -111,18 +111,18 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({
                 </div>
             </div>
 
-            <div className="flex gap-3 mt-2">
+            <div className="flex gap-2 sm:gap-3 mt-2 flex-col sm:flex-row min-h-[44px]">
                 <button
                     type="button"
                     onClick={handleDelete}
-                    className="flex-1 py-3 rounded-xl bg-rose-100 text-rose-500 font-bold text-sm hover:bg-rose-200 transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 py-3 rounded-xl bg-rose-100 text-rose-500 font-bold text-xs sm:text-sm hover:bg-rose-200 transition-colors flex items-center justify-center gap-2"
                 >
                     <Trash2 size={16} /> 删除
                 </button>
                 <button 
                     type="submit"
                     disabled={!title.trim()}
-                    className="flex-[2] py-3 rounded-xl bg-amber-400 text-white font-bold text-sm shadow-md shadow-amber-200 hover:bg-amber-500 transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 sm:flex-[2] py-3 rounded-xl bg-amber-400 text-white font-bold text-xs sm:text-sm shadow-md shadow-amber-200 hover:bg-amber-500 transition-colors flex items-center justify-center gap-2 shrink-0"
                 >
                     <Save size={16} /> 保存修改
                 </button>

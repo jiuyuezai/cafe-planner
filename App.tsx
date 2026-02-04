@@ -76,6 +76,30 @@ const App: React.FC = () => {
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isDataManagerOpen, setIsDataManagerOpen] = useState(false);
 
+  // --- DATA MIGRATION ---
+  // Migrate old tasks without createdAt field
+  const migrateTaskData = async (tasks: Task[]): Promise<Task[]> => {
+    let hasMigrated = false;
+    const migratedTasks = tasks.map(task => {
+      // If createdAt is missing, use completedAt or current time
+      if (!task.createdAt) {
+        hasMigrated = true;
+        return {
+          ...task,
+          createdAt: task.completedAt || Date.now()
+        };
+      }
+      return task;
+    });
+    
+    // If migration happened, update all tasks in DB
+    if (hasMigrated) {
+      console.log('🔄 自动迁移：为旧任务补充 createdAt 时间戳');
+      await Promise.all(migratedTasks.map(task => DB.tasks.put(task)));
+    }
+    return migratedTasks;
+  };
+
   // --- INDEXEDDB INITIALIZATION ---
   useEffect(() => {
     const initData = async () => {
@@ -97,6 +121,9 @@ const App: React.FC = () => {
             await DB.tasks.seed(INITIAL_TASKS);
             dbTasks = INITIAL_TASKS;
           }
+        } else {
+          // Migrate old tasks that lack createdAt field
+          dbTasks = await migrateTaskData(dbTasks);
         }
         setTasks(dbTasks);
 
@@ -122,13 +149,45 @@ const App: React.FC = () => {
   );
 
   // Logic Helpers
-  const getTasksByBlock = (block: TimeBlock) => tasks.filter(task => task.timeBlock === block);
+  
+  // Helper: Get Beijing time (UTC+8) start of day (00:00:00)
+  const getBeijingTodayStart = (): number => {
+    const now = new Date();
+    // getTimezoneOffset() returns minutes west of UTC (negative for east)
+    // Beijing is UTC+8, so offset is -480 minutes
+    const userOffsetMinutes = now.getTimezoneOffset();
+    const beijingOffsetMinutes = -8 * 60; // UTC+8 = -480 minutes
+    const diffMinutes = beijingOffsetMinutes - userOffsetMinutes;
+    
+    const beijingTime = new Date(now.getTime() + diffMinutes * 60 * 1000);
+    beijingTime.setHours(0, 0, 0, 0);
+    return beijingTime.getTime();
+  };
+
+  // Helper: Check if a completed task should be hidden
+  // Hide completed tasks if they were completed before today (Beijing time)
+  const shouldHideTask = (task: Task): boolean => {
+    if (task.status !== 'completed') return false; // Only hide completed tasks
+    if (!task.completedAt) return false; // Safety check - task must have completion time
+    
+    const beijingTodayStart = getBeijingTodayStart();
+    // Hide if completed before today (Beijing time)
+    // Tasks completed today stay visible, only hide tasks completed before today
+    return task.completedAt < beijingTodayStart;
+  };
+
+  // Filter tasks by timeBlock and hide old completed tasks
+  const getTasksByBlock = (block: TimeBlock) => 
+    tasks.filter(task => task.timeBlock === block && !shouldHideTask(task));
+  
   const getCategory = (id: string) => categories.find(c => c.id === id);
 
   const calculateProgress = () => {
-    if (tasks.length === 0) return 0;
-    const completed = tasks.filter(t => t.status === 'completed').length;
-    return (completed / tasks.length) * 100;
+    // Only count visible tasks (filter out hidden old completed tasks)
+    const visibleTasks = tasks.filter(task => !shouldHideTask(task));
+    if (visibleTasks.length === 0) return 0;
+    const completed = visibleTasks.filter(t => t.status === 'completed').length;
+    return (completed / visibleTasks.length) * 100;
   };
 
   const handleToggleStatus = (id: string) => {
@@ -155,7 +214,8 @@ const App: React.FC = () => {
       title,
       categoryId,
       timeBlock,
-      status: 'active'
+      status: 'active',
+      createdAt: Date.now()
     };
     setTasks(prev => [...prev, newTask]);
     DB.tasks.put(newTask); // Sync DB
@@ -164,7 +224,13 @@ const App: React.FC = () => {
   const handleUpdateTask = (id: string, title: string, categoryId: string, timeBlock: TimeBlock) => {
     setTasks(prev => prev.map(t => {
       if (t.id === id) {
-        const updated = { ...t, title, categoryId, timeBlock };
+        const updated = { 
+          ...t, 
+          title, 
+          categoryId, 
+          timeBlock,
+          createdAt: t.createdAt || Date.now() // Preserve existing createdAt or set if missing
+        };
         DB.tasks.put(updated); // Sync DB
         return updated;
       }
@@ -246,12 +312,18 @@ const App: React.FC = () => {
         await DB.notes.delete(note.id);
       }
 
+      // Ensure all imported tasks have createdAt timestamp
+      const tasksWithTimestamp = newTasks.map(task => ({
+        ...task,
+        createdAt: task.createdAt || Date.now()
+      }));
+
       // Then, import new data
       if (newCategories.length > 0) {
         await DB.categories.seed(newCategories);
       }
-      if (newTasks.length > 0) {
-        await DB.tasks.seed(newTasks);
+      if (tasksWithTimestamp.length > 0) {
+        await DB.tasks.seed(tasksWithTimestamp);
       }
       if (newNotes.length > 0) {
         await Promise.all(newNotes.map(note => DB.notes.put(note)));
@@ -259,7 +331,7 @@ const App: React.FC = () => {
 
       // Update state
       setCategories(newCategories);
-      setTasks(newTasks);
+      setTasks(tasksWithTimestamp);
       setQuickNotes(newNotes.sort((a, b) => b.createdAt - a.createdAt));
 
       play('open');

@@ -18,6 +18,7 @@ export interface Task {
   categoryId: string; // Links to Category.id
   timeBlock: TimeBlock;
   status: TaskStatus;
+  createdAt: number; // Timestamp for task creation
   completedAt?: number; // Timestamp for history
 }
 
